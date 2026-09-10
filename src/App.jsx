@@ -76,7 +76,7 @@ function App() {
     setError('')
     try {
       const result = routeData[`${from}-${to}`]
-      setRoute(result.details.route)
+      setRoute(result)
       setRouteFrom(from)
       setRouteTo(to)
       setMessage(result ? '' : 'No direct mock route found. Try one of the popular routes below.')
