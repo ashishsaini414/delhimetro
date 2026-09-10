@@ -66,14 +66,19 @@ function TrainIcon() {
 function App() {
   const [from, setFrom] = useState('Kashmere Gate')
   const [to, setTo] = useState('Hauz Khas')
-  const [route, setRoute] = useState(routeData['Kashmere Gate-Hauz Khas'])
+  const [route, setRoute] = useState(null)
+  const [routeFrom, setRouteFrom] = useState('')
+  const [routeTo, setRouteTo] = useState('')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
   const findRoute = () => {
+    setError('')
     try {
       const result = routeData[`${from}-${to}`]
-      setRoute(result.details.route)
+      setRoute(result)
+      setRouteFrom(from)
+      setRouteTo(to)
       setMessage(result ? '' : 'No direct mock route found. Try one of the popular routes below.')
     } catch (routeError) {
       setRoute(null)
@@ -85,6 +90,8 @@ function App() {
     setFrom(origin)
     setTo(destination)
     setRoute(routeData[`${origin}-${destination}`])
+    setRouteFrom(origin)
+    setRouteTo(destination)
     setMessage('')
     setError('')
   }
@@ -92,8 +99,6 @@ function App() {
   const swapStations = () => {
     setFrom(to)
     setTo(from)
-    setRoute(null)
-    setMessage('Choose “Find route” to search this direction.')
     setError('')
   }
 
@@ -176,7 +181,7 @@ function App() {
                 <div className="journey-heading">
                   <div>
                     <span>Your journey</span>
-                    <h2>{from} <b>→</b> {to}</h2>
+                    <h2>{routeFrom} <b>→</b> {routeTo}</h2>
                   </div>
                   <span className="service-status"><i /> Normal service</span>
                 </div>
